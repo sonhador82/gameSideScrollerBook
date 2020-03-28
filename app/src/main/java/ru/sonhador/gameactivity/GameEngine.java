@@ -10,8 +10,12 @@ class GameEngine extends SurfaceView implements Runnable {
     private Thread mThread = null;
     private long mFPS;
 
+    private SoundEngine mSoungEngine;
+
     public GameEngine(Context context, Point size) {
         super(context);
+
+        mSoungEngine = new SoundEngine(context);
     }
 
     @Override
