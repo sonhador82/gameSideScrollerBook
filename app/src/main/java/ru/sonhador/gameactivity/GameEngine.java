@@ -12,11 +12,15 @@ class GameEngine extends SurfaceView implements Runnable, GameStarter {
 
     private GameState mGameState;
     private SoundEngine mSoungEngine;
+    HUD mHUD;
+    Renderer mRenderer;
 
     public GameEngine(Context context, Point size) {
         super(context);
         mGameState = new GameState(this, context);
         mSoungEngine = new SoundEngine(context);
+        mHUD = new HUD(size);
+        mRenderer = new Renderer(this);
     }
 
     @Override
@@ -27,6 +31,7 @@ class GameEngine extends SurfaceView implements Runnable, GameStarter {
                 // update all game objects here in a new way
             }
             // draw all game objects here in a new way
+            mRenderer.draw(mGameState, mHUD);
 
             long timeThisFrame = System.currentTimeMillis() - frameStartTime;
             if (timeThisFrame >= 1) {
@@ -41,6 +46,8 @@ class GameEngine extends SurfaceView implements Runnable, GameStarter {
     public boolean onTouchEvent(MotionEvent event) {
         // Handle the player's input here
         // But in a new way»
+
+        mSoungEngine.playShoot();
         return true;
     }
 
