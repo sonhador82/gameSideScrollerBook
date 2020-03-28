@@ -12,7 +12,7 @@ import android.util.Log;
 import java.io.IOException;
 
 class SoundEngine {
-    private final static String TAG = "SoundEngine"
+    private final static String TAG = "SoundEngine";
     private SoundPool mSP;
     private int mShoot_ID = -1;
     private int mAlien_Explode_ID = -1;

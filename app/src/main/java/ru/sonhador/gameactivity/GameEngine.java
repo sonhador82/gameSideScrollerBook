@@ -9,14 +9,14 @@ import android.view.SurfaceView;
 class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private Thread mThread = null;
     private long mFPS;
-    private GameState mGameState;
 
+    private GameState mGameState;
     private SoundEngine mSoungEngine;
 
     public GameEngine(Context context, Point size) {
         super(context);
-        mSoungEngine = new SoundEngine(context);
         mGameState = new GameState(this, context);
+        mSoungEngine = new SoundEngine(context);
     }
 
     @Override

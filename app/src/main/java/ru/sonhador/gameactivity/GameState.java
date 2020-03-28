@@ -40,6 +40,20 @@ final class GameState {
         }
     }
 
+    void startNewGame(){
+        mScore = 0;
+        mNumShips = 3;
+        // Don't want to be drawing objects
+        // while deSpawnReSpawn is
+        // clearing them and spawning them again
+        stopDrawing();
+        gameStarter.deSpawnReSpawn();
+        resume();
+
+        // Now we can draw again
+        startDrawing();
+    }
+
     void loseLife(SoundEngine se){
         mNumShips--;
         se.playPlayerExplode();
@@ -68,6 +82,7 @@ final class GameState {
     void pause(){
         mPaused = true;
     }
+
     void resume(){
         mGameOver = false;
         mPaused = false;
