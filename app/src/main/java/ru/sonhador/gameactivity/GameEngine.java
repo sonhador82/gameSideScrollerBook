@@ -6,29 +6,34 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-class GameEngine extends SurfaceView implements Runnable {
+class GameEngine extends SurfaceView implements Runnable, GameStarter {
     private Thread mThread = null;
     private long mFPS;
+    private GameState mGameState;
 
     private SoundEngine mSoungEngine;
 
     public GameEngine(Context context, Point size) {
         super(context);
-
         mSoungEngine = new SoundEngine(context);
+        mGameState = new GameState(this, context);
     }
 
     @Override
     public void run() {
-        long frameStartTime = System.currentTimeMillis();
-        // Update all the game objects here
-        // in a new way
-        // Draw all the game objects here
-        // in a new way»
-        long timeThisFrame = System.currentTimeMillis() - frameStartTime;
-        if (timeThisFrame >= 1) {
-            final int MILLIS_IN_SECOND = 1000;
-            mFPS = MILLIS_IN_SECOND / timeThisFrame;
+        while (mGameState.getThreadRunning()){
+            long frameStartTime = System.currentTimeMillis();
+            if(!mGameState.getPaused()) {
+                // update all game objects here in a new way
+            }
+            // draw all game objects here in a new way
+
+            long timeThisFrame = System.currentTimeMillis() - frameStartTime;
+            if (timeThisFrame >= 1) {
+                final int MILLIS_IN_SECOND = 1000;
+                mFPS = MILLIS_IN_SECOND / timeThisFrame;
+            }
+
         }
     }
 
@@ -40,11 +45,13 @@ class GameEngine extends SurfaceView implements Runnable {
     }
 
     public void startThread() {
+        mGameState.startThread();
         mThread = new Thread(this);
         mThread.start();
     }
 
     public void stopThread() {
+        mGameState.stopEverethins();
         try {
             mThread.join();
         }
@@ -52,5 +59,11 @@ class GameEngine extends SurfaceView implements Runnable {
         {
             Log.e("Exception","stop-Thread()" + e.getMessage());
         }
+    }
+
+    @Override
+    public void deSpawnReSpawn() {
+        // Eventually this will despawn
+        // and then respawn all the game objects»
     }
 }
